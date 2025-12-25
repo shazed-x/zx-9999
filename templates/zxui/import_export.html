@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="page-header" data-animate>
+    <div class="section-title">Import / Export</div>
+    <h1 class="section-heading">Preset Sync</h1>
+    <p class="section-subtitle">Move command libraries between environments safely.</p>
+  </div>
+
+  <section class="grid two" data-animate>
+    <div class="panel">
+      <div class="panel-header">
+        <h2 class="glow">Export</h2>
+        <p>Download the full tool library as JSON.</p>
+      </div>
+      <div class="form">
+        <a class="button ghost" href="{% url 'zxui:export' %}">Export JSON</a>
+        <div class="notice">
+          Exports include tool details, command templates, categories, and tags.
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header">
+        <h2 class="glow">Import</h2>
+        <p>Paste JSON to merge or overwrite existing presets.</p>
+      </div>
+      <form method="post" class="form">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="import_data">
+        <label>
+          Paste JSON
+          <textarea name="payload" rows="8" placeholder='{"tools": [{"name": "nmap", "commands": [{"name": "Ping scan", "template": "nmap -sn {target}"}]}]}'></textarea>
+        </label>
+        <label class="checkbox">
+          <input type="checkbox" name="overwrite">
+          Overwrite existing commands
+        </label>
+        <button class="button" type="submit">Import</button>
+      </form>
+    </div>
+  </section>
+{% endblock %}

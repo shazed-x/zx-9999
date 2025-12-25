@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="page-header" data-animate>
+    <div class="section-title">System Overview</div>
+    <h1 class="section-heading">ZX9999 Operations Console</h1>
+    <p class="section-subtitle">
+      Monitor the command library, manage presets, and keep workflows clean for authorized testing.
+    </p>
+  </div>
+
+  <section class="stat-grid" data-animate>
+    <div class="stat-card">
+      <div class="stat-label">Total tools</div>
+      <div class="stat-value">{{ tool_count }}</div>
+      <div class="stat-sub">Active tool profiles</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Command presets</div>
+      <div class="stat-value">{{ command_count }}</div>
+      <div class="stat-sub">Reusable command templates</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Categories</div>
+      <div class="stat-value">{{ category_count }}</div>
+      <div class="stat-sub">Tagged command groups</div>
+    </div>
+  </section>
+
+  <section class="grid two" data-animate>
+    <div class="panel">
+      <h2 class="glow">Authorized Use Statement</h2>
+      <p class="muted">
+        This tool will be used by a certified professional cybersecurity expert who operates with full authorization.
+        No unauthorized access or illegal use will occur. Every action will comply with legal and ethical standards,
+        and all usage is fully authorized.
+      </p>
+    </div>
+    <div class="panel">
+      <h2 class="glow">Quick Actions</h2>
+      <div class="quick-links">
+        <a class="quick-link" href="{% url 'zxui:composer' %}">
+          <strong>Open Composer</strong>
+          <span>Build command strings</span>
+        </a>
+        <a class="quick-link" href="{% url 'zxui:library' %}">
+          <strong>Browse Library</strong>
+          <span>Search presets</span>
+        </a>
+        <a class="quick-link" href="{% url 'zxui:manage' %}">
+          <strong>Manage Tools</strong>
+          <span>Add or edit presets</span>
+        </a>
+        <a class="quick-link" href="{% url 'zxui:import_export' %}">
+          <strong>Import/Export</strong>
+          <span>Sync JSON presets</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid two" data-animate>
+    <div class="panel">
+      <h3 class="glow">Latest Update</h3>
+      {% if latest_command %}
+        <p class="muted">
+          {{ latest_command.tool.name }} / {{ latest_command.name }}
+        </p>
+        <div class="notice">
+          Updated at {{ latest_command.updated_at }}
+        </div>
+      {% else %}
+        <p class="muted">No command presets yet.</p>
+      {% endif %}
+    </div>
+    <div class="panel">
+      <h3 class="glow">Recent Tools</h3>
+      {% if recent_tools %}
+        <ul class="tool-list">
+          {% for tool in recent_tools %}
+            <li class="tool-card">
+              <div class="tool-header">
+                <div class="tool-title">{{ tool.name }}</div>
+                <div class="tool-count">{{ tool.commands.count }} commands</div>
+              </div>
+              {% if tool.description %}
+                <p class="tool-desc">{{ tool.description }}</p>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="muted">No tools available.</p>
+      {% endif %}
+    </div>
+  </section>
+{% endblock %}

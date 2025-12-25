@@ -1,0 +1,57 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ZX9999 | {{ page_title|default:"Command Studio" }}</title>
+  <link rel="stylesheet" href="{% static 'zxui/styles.css' %}">
+  <script defer src="{% static 'zxui/app.js' %}"></script>
+</head>
+<body>
+  {% include "components/zx_dotwave_bg.html" %}
+  <div class="page">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">ZX9999</div>
+        <div class="tag">Command Studio</div>
+      </div>
+      <nav class="nav">
+        <a href="{% url 'zxui:overview' %}" class="{% if active_page == 'overview' %}active{% endif %}">Overview</a>
+        <a href="{% url 'zxui:composer' %}" class="{% if active_page == 'composer' %}active{% endif %}">Composer</a>
+        <a href="{% url 'zxui:library' %}" class="{% if active_page == 'library' %}active{% endif %}">Library</a>
+        <a href="{% url 'zxui:manage' %}" class="{% if active_page == 'manage' %}active{% endif %}">Manage</a>
+        <a href="{% url 'zxui:import_export' %}" class="{% if active_page == 'import_export' %}active{% endif %}">
+          Import/Export
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <span class="pill">Port 9999</span>
+      </div>
+    </aside>
+    <div class="main">
+      <header class="topbar">
+        <div class="topbar-title">ZX9999 / {{ page_title|default:"Command Studio" }}</div>
+        <div class="topbar-actions">
+          <div class="status-lights" aria-hidden="true">
+            <span class="status-dot live"></span>
+            <span class="status-dot warn"></span>
+            <span class="status-dot idle"></span>
+          </div>
+          <span class="pill">Authorized only</span>
+        </div>
+      </header>
+      <main class="content">
+        {% if messages %}
+          <div class="messages">
+            {% for message in messages %}
+              <div class="message {{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+          </div>
+        {% endif %}
+        {% block content %}{% endblock %}
+      </main>
+    </div>
+  </div>
+</body>
+</html>

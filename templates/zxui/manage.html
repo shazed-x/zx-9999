@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% block content %}
+  {{ tools_payload|json_script:"tools-data" }}
+  <div class="page-header" data-animate>
+    <div class="section-title">Manage</div>
+    <h1 class="section-heading">Tool & Command Manager</h1>
+    <p class="section-subtitle">Add tools, create presets, and update command templates.</p>
+  </div>
+
+  <section class="form-grid" data-animate>
+    <div class="panel form-panel">
+      <div class="panel-header">
+        <h3 class="glow">Add Tool</h3>
+        <p>Create a new CLI tool entry.</p>
+      </div>
+      <form method="post" class="form">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="add_tool">
+        <label>
+          Tool name
+          <input type="text" name="name" placeholder="e.g. nmap" required>
+        </label>
+        <label>
+          Description
+          <textarea name="description" rows="3" placeholder="Optional description"></textarea>
+        </label>
+        <button class="button" type="submit">Add tool</button>
+      </form>
+    </div>
+
+    <div class="panel form-panel">
+      <div class="panel-header">
+        <h3 class="glow">Add Command</h3>
+        <p>Save a reusable command template.</p>
+      </div>
+      <form method="post" class="form">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="add_command">
+        <label>
+          Tool
+          <select name="tool_id" id="add-command-tool" required>
+            <option value="">Select tool</option>
+            {% for tool in tools %}
+              <option value="{{ tool.id }}">{{ tool.name }}</option>
+            {% endfor %}
+          </select>
+        </label>
+        <label>
+          Command name
+          <input type="text" name="name" placeholder="e.g. Full TCP sweep" required>
+        </label>
+        <label>
+          Description
+          <textarea name="description" rows="3" placeholder="Optional description"></textarea>
+        </label>
+        <label>
+          Category
+          <input type="text" name="category" placeholder="e.g. Recon">
+        </label>
+        <label>
+          Tags (comma separated)
+          <input type="text" name="tags" placeholder="e.g. safe, tcp, discovery">
+        </label>
+        <label>
+          Template
+          <textarea name="template" rows="3" placeholder="e.g. nmap -p- -T4 {target}" required></textarea>
+        </label>
+        <button class="button" type="submit">Add command</button>
+      </form>
+    </div>
+
+    <div class="panel form-panel">
+      <div class="panel-header">
+        <h3 class="glow">Edit Command</h3>
+        <p>Customize an existing template.</p>
+      </div>
+      <form method="post" class="form" id="edit-command-form">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="update_command">
+        <label>
+          Command
+          <select name="command_id" id="edit-command-select" required></select>
+        </label>
+        <label>
+          Tool
+          <select name="tool_id" id="edit-tool-select" required></select>
+        </label>
+        <label>
+          Command name
+          <input type="text" name="name" id="edit-name" required>
+        </label>
+        <label>
+          Description
+          <textarea name="description" rows="3" id="edit-description"></textarea>
+        </label>
+        <label>
+          Category
+          <input type="text" name="category" id="edit-category">
+        </label>
+        <label>
+          Tags (comma separated)
+          <input type="text" name="tags" id="edit-tags" placeholder="e.g. safe, tcp, discovery">
+        </label>
+        <label>
+          Template
+          <textarea name="template" rows="3" id="edit-template" required></textarea>
+        </label>
+        <button class="button" type="submit">Update command</button>
+      </form>
+    </div>
+  </section>
+{% endblock %}

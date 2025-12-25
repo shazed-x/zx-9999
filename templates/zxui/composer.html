@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block content %}
+  {{ tools_payload|json_script:"tools-data" }}
+  <div class="page-header" data-animate>
+    <div class="section-title">Composer</div>
+    <h1 class="section-heading">Command Composer</h1>
+    <p class="section-subtitle">Build command strings by combining presets with live parameters.</p>
+  </div>
+
+  <section class="grid two" data-animate>
+    <div class="panel compose">
+      <div class="panel-header">
+        <h2 class="glow">Compose Command</h2>
+        <p>Choose a tool, pick a command preset, then tune the variables.</p>
+      </div>
+      <div class="form">
+        <label>
+          Tool
+          <select id="tool-select"></select>
+        </label>
+        <label>
+          Command search
+          <input type="text" id="command-search" placeholder="Filter command presets">
+        </label>
+        <label>
+          Command preset
+          <select id="command-select"></select>
+        </label>
+        <div class="template-box">
+          <div class="template-label">Template</div>
+          <div class="template-value" id="template-preview">Select a command to preview.</div>
+          <div class="template-meta" id="command-meta"></div>
+          <div class="template-meta" id="command-description"></div>
+        </div>
+        <div class="param-grid" id="param-fields"></div>
+        <label>
+          Extra arguments
+          <input type="text" id="extra-args" placeholder="e.g. --reason 'lab-test'">
+        </label>
+        <div class="output">
+          <div class="output-header">
+            <span>Generated command</span>
+            <button class="button ghost" type="button" id="copy-command">Copy</button>
+          </div>
+          <textarea id="command-output" rows="4" readonly></textarea>
+        </div>
+        <div class="notice">
+          <strong>Authorized use only.</strong> ZX9999 does not execute commands. You control where and how they run.
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header">
+        <h2 class="glow">Variable Quick Reference</h2>
+        <p>Use placeholders in templates to prompt input fields automatically.</p>
+      </div>
+      <div class="grid three">
+        <div class="stat-card">
+          <div class="stat-label">Targets</div>
+          <div class="stat-value">{target}</div>
+          <div class="stat-sub">Host or IP</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Ports</div>
+          <div class="stat-value">{port}</div>
+          <div class="stat-sub">Service port</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Domain</div>
+          <div class="stat-value">{domain}</div>
+          <div class="stat-sub">FQDN entry</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Local Host</div>
+          <div class="stat-value">{lhost}</div>
+          <div class="stat-sub">Local IP</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Local Port</div>
+          <div class="stat-value">{lport}</div>
+          <div class="stat-sub">Local port</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">File</div>
+          <div class="stat-value">{file}</div>
+          <div class="stat-sub">Path to file</div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

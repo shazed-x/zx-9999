@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block content %}
+  {{ tools_payload|json_script:"tools-data" }}
+  <div class="page-header" data-animate>
+    <div class="section-title">Library</div>
+    <h1 class="section-heading">Tool Library</h1>
+    <p class="section-subtitle">Filter, inspect, and reuse command presets.</p>
+  </div>
+
+  <section class="panel catalog" data-animate>
+    <div class="panel-header">
+      <h2 class="glow">Preset Catalog</h2>
+      <p>Track available presets and keep the operator playbook clean.</p>
+    </div>
+    <div class="library-controls">
+      <label>
+        Search
+        <input type="text" id="library-search" placeholder="Tool, command, or template">
+      </label>
+      <label>
+        Category
+        <select id="category-filter">
+          <option value="">All categories</option>
+        </select>
+      </label>
+    </div>
+    {% if tools %}
+      <div class="tool-list">
+        {% for tool in tools %}
+          <div class="tool-card" data-tool-name="{{ tool.name }}">
+            <div class="tool-header">
+              <div class="tool-title">{{ tool.name }}</div>
+              <div class="tool-count">{{ tool.commands.count }} commands</div>
+            </div>
+            {% if tool.description %}
+              <p class="tool-desc">{{ tool.description }}</p>
+            {% endif %}
+            <ul>
+              {% for command in tool.commands.all %}
+                <li
+                  data-command-name="{{ command.name }}"
+                  data-command-template="{{ command.template }}"
+                  data-command-description="{{ command.description }}"
+                  data-command-category="{{ command.category }}"
+                  data-command-tags="{{ command.tags|join:', ' }}"
+                >
+                  <span class="command-name">{{ command.name }}</span>
+                  <span class="command-template">{{ command.template }}</span>
+                  {% if command.category or command.tags %}
+                    <span class="command-meta">
+                      {% if command.category %}Category: {{ command.category }}{% endif %}
+                      {% if command.tags %}
+                        {% if command.category %} · {% endif %}Tags: {{ command.tags|join:", " }}
+                      {% endif %}
+                    </span>
+                  {% endif %}
+                </li>
+              {% empty %}
+                <li class="muted">No commands yet.</li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="empty-state">
+        <h3>No tools yet</h3>
+        <p>Add your first tool and command presets in Manage.</p>
+      </div>
+    {% endif %}
+  </section>
+{% endblock %}

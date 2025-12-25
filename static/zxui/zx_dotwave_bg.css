@@ -1,0 +1,75 @@
+.zx-dotwave-bg {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 20% 20%, rgba(0, 255, 136, 0.12), transparent 35%),
+              radial-gradient(circle at 80% 20%, rgba(0, 255, 136, 0.08), transparent 40%),
+              radial-gradient(circle at 50% 80%, rgba(0, 120, 80, 0.18), transparent 45%),
+              linear-gradient(180deg, #040707 0%, #040b09 35%, #030604 100%);
+  overflow: hidden;
+}
+
+.zx-dotwave-bg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(var(--sidebar-width, 260px) + 1px);
+  height: 100%;
+  background: linear-gradient(180deg, #060a08, #08120c);
+  border-right: 1px solid rgba(57, 255, 20, 0.2);
+  z-index: 3;
+}
+
+#zx-dotwave {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 0;
+}
+
+.zx-dotwave-scanlines {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: repeating-linear-gradient(
+    180deg,
+    rgba(0, 255, 136, 0.06),
+    rgba(0, 255, 136, 0.06) 1px,
+    rgba(0, 0, 0, 0) 1px,
+    rgba(0, 0, 0, 0) 6px
+  );
+  opacity: 0.12;
+  mix-blend-mode: screen;
+}
+
+.zx-dotwave-vignette {
+  position: absolute;
+  inset: -20%;
+  z-index: 2;
+  background: radial-gradient(circle, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.8) 100%);
+  opacity: 0.85;
+}
+
+.zx-dotwave-hud {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background-image:
+    linear-gradient(rgba(0, 255, 136, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 136, 0.08) 1px, transparent 1px);
+  background-size: 120px 120px;
+  opacity: 0.06;
+  mix-blend-mode: screen;
+}
+
+@media (max-width: 920px) {
+  .zx-dotwave-bg::before {
+    display: none;
+  }
+}
