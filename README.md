@@ -40,6 +40,12 @@ pip install -r requirements.txt
 python manage.py migrate
 python manage.py runserver 0.0.0.0:9999
 ```
+## Local/public ip Allow
+```bash
+export ALLOWED_HOSTS=127.0.0.1,0.0.0.0,localhost,<public ip>
+export DEBUG=0
+export DEBUG=1
+```
 
 ## Docker (optional)
 ```bash
